@@ -1,0 +1,9 @@
+version: "3"
+services:
+  volt-dynamo:
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
