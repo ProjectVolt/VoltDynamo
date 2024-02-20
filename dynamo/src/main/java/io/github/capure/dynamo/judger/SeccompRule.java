@@ -1,4 +1,4 @@
-package io.github.capure;
+package io.github.capure.dynamo.judger;
 
 public enum SeccompRule {
 	SECCOMP_RULE_C_CPP,

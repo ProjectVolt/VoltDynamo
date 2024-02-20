@@ -1,4 +1,4 @@
-package io.github.capure;
+package io.github.capure.dynamo.judger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
