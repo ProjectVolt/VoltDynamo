@@ -1,4 +1,0 @@
-FATAL [2024-02-19 09:50:06] [/app/src/child.c:101]Error: System errno: No such file or directory; Internal errno: DUP2_FAILED
-FATAL [2024-02-19 09:50:40] [/app/src/child.c:101]Error: System errno: No such file or directory; Internal errno: DUP2_FAILED
-FATAL [2024-02-19 09:51:14] [/app/src/child.c:101]Error: System errno: No such file or directory; Internal errno: DUP2_FAILED
-FATAL [2024-02-19 09:51:36] [/app/src/child.c:101]Error: System errno: No such file or directory; Internal errno: DUP2_FAILED
