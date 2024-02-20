@@ -1,4 +1,4 @@
-package io.github.capure;
+package io.github.capure.dynamo.judger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
