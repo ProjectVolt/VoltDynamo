@@ -1,4 +1,1 @@
 .vscode/
-bindings/judger-bindings/target/
-bindings/judger-bindings/judger_test/*.log
-bindings/judger-bindings/judger_test/main

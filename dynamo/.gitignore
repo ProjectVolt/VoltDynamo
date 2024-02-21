@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+judger_test/main
+judger_test/*.log
