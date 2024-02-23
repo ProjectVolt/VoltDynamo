@@ -135,8 +135,9 @@ public class JudgeService {
             changePermissions(inPath, JudgerConfig.RUN_USER_UID, JudgerConfig.RUN_USER_GID, "400");
             changePermissions(outPath, JudgerConfig.RUN_USER_UID, JudgerConfig.RUN_USER_GID, "711");
 
-            String command = String.format("%s", newExePath);
             LangConfig config = submissionDetails.getLanguage().getConfig();
+            List<String> command = new ArrayList<>();
+            command.addAll(List.of(String.format(config.getRunCommand(), newExePath).split(" ")));
 
             List<String> env = new ArrayList<>();
             env.add("PATH=" + System.getenv("PATH"));
@@ -148,9 +149,10 @@ public class JudgeService {
                     .maxMemory(submissionDetails.getMemoryLimit())
                     .maxStack(128 * 1024 * 1024)
                     .maxOutputSize(5 * 1024 * 1024)
-                    .exePath(command)
+                    .exePath(command.removeFirst())
+                    .args(command)
                     .env(env)
-                    .logPath(Paths.get(tmp.toString(), "run.log").toString())
+                    .logPath(JudgerConfig.RUN_LOG_PATH)
                     .seccompRuleName(config.getRunSeccompRule())
                     .inputPath(inPath.toString())
                     .outputPath(outPath.toString())

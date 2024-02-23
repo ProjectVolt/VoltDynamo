@@ -37,7 +37,7 @@ public class CompilerService {
                 .maxStack(128 * 1024 * 1024)
                 .maxOutputSize(20 * 1024 * 1024)
                 .exePath(commandList.removeFirst())
-                .inputPath(sourceDirPath)
+                .inputPath(sourceFilePath.toString())
                 .outputPath(compilerOut.toString())
                 .errorPath(compilerOut.toString())
                 .args(commandList)

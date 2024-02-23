@@ -3,8 +3,10 @@ package io.github.capure.dynamo.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import io.github.capure.dynamo.config.CConfig;
 import io.github.capure.dynamo.config.CppConfig;
 import io.github.capure.dynamo.config.LangConfig;
+import io.github.capure.dynamo.config.PythonConfig;
 
 public enum Language {
     C(0),
@@ -26,11 +28,11 @@ public enum Language {
     public LangConfig getConfig() {
         switch (this) {
             case C:
-                throw new UnsupportedOperationException("C is not supported yet");
+                return new CConfig();
             case CPP:
                 return new CppConfig();
             case PYTHON:
-                throw new UnsupportedOperationException("Python is not supported yet");
+                return new PythonConfig();
             default:
                 return null;
         }
