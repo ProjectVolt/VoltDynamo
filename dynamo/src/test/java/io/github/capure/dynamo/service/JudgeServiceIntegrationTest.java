@@ -46,6 +46,7 @@ public class JudgeServiceIntegrationTest {
         assertFalse(result.getAnswerSuccess());
         assertEquals(0, result.getTestResults().size());
         assertNotNull(result.getCompileError());
+        assertFalse(result.getCompileError().getFatal());
     }
 
     @Test
@@ -61,6 +62,7 @@ public class JudgeServiceIntegrationTest {
         assertFalse(result.getAnswerSuccess());
         assertEquals(0, result.getTestResults().size());
         assertNotNull(result.getCompileError());
+        assertFalse(result.getCompileError().getFatal());
     }
 
     @Test
@@ -76,6 +78,7 @@ public class JudgeServiceIntegrationTest {
         assertFalse(result.getAnswerSuccess());
         assertEquals(0, result.getTestResults().size());
         assertNotNull(result.getCompileError());
+        assertFalse(result.getCompileError().getFatal());
     }
 
     @Test

@@ -19,7 +19,7 @@ public class SubmissionResult {
     private Boolean runSuccess;
     @NonNull
     private Boolean answerSuccess;
-    private String compileError;
+    private CompileError compileError;
     @NonNull
     private List<TestCaseResult> testResults;
 }

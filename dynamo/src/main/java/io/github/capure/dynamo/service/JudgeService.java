@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.capure.dynamo.config.JudgerConfig;
 import io.github.capure.dynamo.config.LangConfig;
+import io.github.capure.dynamo.dto.CompileError;
 import io.github.capure.dynamo.dto.SubmissionDetails;
 import io.github.capure.dynamo.dto.SubmissionResult;
 import io.github.capure.dynamo.dto.TestCaseResult;
@@ -113,6 +114,8 @@ public class JudgeService {
                 cleanUp(tmp);
                 throw e;
             }
+        } catch (CompileErrorException e) {
+            throw e;
         } catch (Exception e) {
             throw new CompileErrorException("Compilation failed");
         }
@@ -209,17 +212,25 @@ public class JudgeService {
 
             return new SubmissionResult(submissionDetails.getSubmissionId(), submissionDetails.getProblemId(), true,
                     runSuccess, answerSuccess, results);
-        } catch (Exception e) {
-            Boolean isCompileError = e instanceof CompileErrorException;
-            Boolean compileSuccess = !isCompileError && !(e instanceof TestCaseNotFoundException);
-
+        } catch (TestCaseNotFoundException e) {
             SubmissionResult result = new SubmissionResult(submissionDetails.getSubmissionId(),
                     submissionDetails.getProblemId(),
-                    compileSuccess, false, false,
+                    false, false, false,
                     new ArrayList<>());
-            if (isCompileError) {
-                result.setCompileError(e.getMessage());
-            }
+            result.setCompileError(new CompileError("Test cases not found", true));
+            return result;
+        } catch (CompileErrorException e) {
+            SubmissionResult result = new SubmissionResult(submissionDetails.getSubmissionId(),
+                    submissionDetails.getProblemId(),
+                    false, false, false,
+                    new ArrayList<>());
+            result.setCompileError(new CompileError(e.getCompilerOutput().orElse(e.getMessage()), false));
+            return result;
+        } catch (Exception e) {
+            SubmissionResult result = new SubmissionResult(submissionDetails.getSubmissionId(),
+                    submissionDetails.getProblemId(),
+                    true, false, false,
+                    new ArrayList<>());
 
             return result;
         }
