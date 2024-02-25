@@ -19,8 +19,10 @@ import io.github.capure.dynamo.judger.JudgerErrorException;
 import io.github.capure.dynamo.judger.JudgerOptions;
 import io.github.capure.dynamo.judger.JudgerResult;
 import io.github.capure.dynamo.judger.JudgerResultCode;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class CompilerService {
     public String compile(LangConfig config, String sourceDirPath, String outputDirPath) throws CompileErrorException {
         Path executablePath = Paths.get(outputDirPath, config.getCompileExe());
@@ -48,21 +50,28 @@ public class CompilerService {
                 .gid(JudgerConfig.COMPILER_USER_GID)
                 .build();
         try {
+            log.debug("Compiling with options: " + options.toString());
             JudgerResult result = Judger.run(options);
             if (result.getResult() != JudgerResultCode.RESULT_SUCCESS) {
+                log.debug("Judger result was not success: " + result.toString());
                 if (Files.exists(compilerOut)) {
                     try {
                         String error = new String(Files.readAllBytes(compilerOut)).strip();
                         Files.delete(compilerOut);
+                        log.debug("Compiler output: " + error);
                         throw new CompileErrorException("Compile error: ", result, error);
                     } catch (IOException e) {
+                        log.error("Error reading compiler output: " + e.getMessage());
                     }
                 }
+                log.error("Compile error: " + result.toString());
                 throw new CompileErrorException("Compile error: ", result);
             } else {
                 try {
                     Files.delete(compilerOut);
+                    log.debug("Compiler output deleted");
                 } catch (IOException e) {
+                    log.error("Error deleting compiler output: " + e.getMessage());
                     throw new CompileErrorException("Compile error: unable to delete compiler output");
                 }
                 return executablePath.toString();
