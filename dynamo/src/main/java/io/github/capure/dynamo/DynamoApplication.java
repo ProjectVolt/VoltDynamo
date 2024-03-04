@@ -31,4 +31,13 @@ public class DynamoApplication {
                 .build();
     }
 
+    @Bean
+    public NewTopic testCaseEditEventsTopic() {
+        return TopicBuilder
+                .name("test_case_edit_events")
+                .replicas(1)
+                .partitions(1)
+                .build();
+    }
+
 }

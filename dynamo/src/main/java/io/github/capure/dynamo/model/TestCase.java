@@ -1,5 +1,6 @@
 package io.github.capure.dynamo.model;
 
+import io.github.capure.schema.TestCaseEventDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,4 +27,13 @@ public class TestCase {
     private String output;
     @Column(nullable = false, columnDefinition = "TEXT")
     private int maxScore;
+
+    public TestCase(TestCaseEventDetails details) {
+        this.id = details.getId();
+        this.problemId = details.getProblemId();
+        this.name = details.getName().toString();
+        this.input = details.getInput().toString();
+        this.output = details.getOutput().toString();
+        this.maxScore = details.getMaxScore();
+    }
 }
