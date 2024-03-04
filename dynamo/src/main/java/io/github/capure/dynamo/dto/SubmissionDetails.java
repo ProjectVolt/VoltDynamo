@@ -1,5 +1,6 @@
 package io.github.capure.dynamo.dto;
 
+import io.github.capure.schema.AvroSubmission;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +26,12 @@ public class SubmissionDetails {
     private Integer timeLimit;
     @NonNull
     private Integer memoryLimit;
+
+    public SubmissionDetails(AvroSubmission submission) {
+        this(submission.getSubmissionId(), submission.getProblemId(), submission.getSourceCode().toString(),
+                Language.valueOf(submission.getLanguage().toString()), submission.getTimeLimit(),
+                submission.getMemoryLimit());
+    }
 
     public String getSourceCode() {
         return new String(Base64.getDecoder().decode(sourceCode));

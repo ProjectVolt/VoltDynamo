@@ -1,5 +1,7 @@
 package io.github.capure.dynamo.dto;
 
+import io.github.capure.schema.AvroTestCaseResult;
+
 import io.github.capure.dynamo.judger.JudgerResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +20,12 @@ public class TestCaseResult {
     private Integer score;
     @NonNull
     private String errorMessage;
+
+    public AvroTestCaseResult toAvro() {
+        return new AvroTestCaseResult(testCaseId,
+                output,
+                judgerResult.toAvro(),
+                score,
+                errorMessage);
+    }
 }
