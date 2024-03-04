@@ -2,6 +2,9 @@ package io.github.capure.dynamo.judger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.github.capure.schema.AvroJudgerResultCode;
+import io.github.capure.schema.AvroJudgerResultError;
+import io.github.capure.schema.AvroJudgerResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +23,14 @@ public class JudgerResult {
     private int exitCode;
     private JudgerResultError error;
     private JudgerResultCode result;
+
+    public AvroJudgerResult toAvro() {
+        return new AvroJudgerResult(cpuTime,
+                realTime,
+                memory,
+                signal,
+                exitCode,
+                AvroJudgerResultError.valueOf(error.name()),
+                AvroJudgerResultCode.valueOf(result.name()));
+    }
 }
